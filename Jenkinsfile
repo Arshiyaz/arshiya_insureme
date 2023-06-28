@@ -20,8 +20,8 @@ node{
     {
     
     withCredentials([string(credentialsId: 'dockerid', variable: 'dockervar')]) {
-        sh 'docker login -u arshiya13 -p ${dockervar}'
-        sh 'docker push arshiya13/insureme'
+        sh 'sudo docker login -u arshiya13 -p ${dockervar}'
+        sh 'sudo docker push arshiya13/insureme'
     
 }
     }

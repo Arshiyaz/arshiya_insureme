@@ -1,30 +1,33 @@
 node{
-    stage('git checjout')
+    stage('git_codecheckout')
     {
-        git branch: 'master', url: 'https://github.com/kondetimounika80/insure-me.git'
+        git branch: 'master', url: 'https://github.com/Arshiyaz/arshiya_insureme.git'
     }
 
-    stage('build'){
+    stage('insureme_build'){
     
-    sh 'mvn clean package'
+    sh 'mvn clean package'   
     }
-    stage('dockerimagebuild')
+    stage('insureme_compile'){
+        sh 'mvn compile'
+    }
+    stage('insureme_dockerimagebuild')
     {
-    sh 'sudo docker build -t kondetimounika/insureme:1.0 .'
+    sh 'sudo docker build -t arshiya13/insureme .'
    
     }
     stage('docker image push to registry')
     {
     
-    withCredentials([string(credentialsId: 'docker-password', variable: 'docker')]) {
-        sh 'docker login -u kondetimounika -p ${docker}'
-        sh 'docker push kondetimounika/insureme:1.0'
+    withCredentials([string(credentialsId: 'dockerid', variable: 'dockervar')]) {
+        sh 'docker login -u arshiya13 -p ${dockervar}'
+        sh 'docker push arshiya13/insureme'
     
 }
     }
     stage('deploy')
     {
     
-       ansiblePlaybook become: true, credentialsId: 'ansiblekey', disableHostKeyChecking: true, installation: 'myAnsible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml' 
+       ansiblePlaybook become: true, credentialsId: 'ansibleid', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml' 
     }
 }

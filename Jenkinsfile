@@ -28,6 +28,6 @@ node{
     stage('deploy')
     {
     
-       ansiblePlaybook become: true, credentialsId: 'ansibleid', disableHostKeyChecking: true, installation: 'ansible', inventory: '/etc/ansible/hosts', playbook: 'ansible-playbook.yml' 
+       sh 'ansible-playbook ansible-playbook.yml -b' 
     }
 }

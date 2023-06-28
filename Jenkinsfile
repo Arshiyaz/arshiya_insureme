@@ -28,7 +28,7 @@ node{
     stage('deploy')
     {
        sh 'sudo chmod 777 /etc/ansible/ansible.pem'
-       sh 'sudo ansible -m ping webservers'
+    
         
        sh 'ansible-playbook ansible-playbook.yml -b' 
     }
